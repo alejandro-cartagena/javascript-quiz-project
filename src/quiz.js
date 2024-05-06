@@ -20,12 +20,12 @@ class Quiz {
     }
 
     // 4. shuffleQuestions()
+    //Durstenfeld shuffle, an optimized version of Fisher-Yates:
+    //https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
     shuffleQuestions() {
         for (let i = this.questions.length - 1; i > 0; i--) {
-            let j = Math.floor(Math.random() * (i + 1));
-            let temp = this.questions[i];
-            this.questions[i] = this.questions[j];
-            this.questions[j] = temp;
+            const j = Math.floor(Math.random() * (i + 1));
+            [this.questions[i], this.questions[j]] = [this.questions[j], this.questions[i]];
         }
     }
 
