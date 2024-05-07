@@ -45,4 +45,57 @@ class Quiz {
             return true;
         }
     }
+
+    // Day 2.
+    // filterQuestionsByDifficulty(difficulty)
+
+    filterQuestionsByDifficulty(difficulty) {
+        if(difficulty < 1 || difficulty > 3) return this.questions;
+        if(typeof difficulty == 'string') return this.questions;
+        this.questions = this.questions.filter(question => question.difficulty === difficulty)
+        return this.questions;
+    }
+
+
+    
+
+    /*
+        questions = [
+            {
+                name: q1,
+                difficulty: 1
+            },
+            {
+                name: q2,
+                difficulty: 1
+            },
+            {
+                name: q3,
+                difficulty: 2
+            }
+
+        ]
+
+        difficulty = 1
+        return this.questions.filter(question => question.difficulty === difficulty);
+        [
+            {
+                name: q1,
+                difficulty: 1
+            },
+            {
+                name: q2,
+                difficulty: 1
+            }
+        ]
+    */
+
+    averageDifficulty() {
+
+        const totalDifficultyPoints = this.questions.reduce((summary, question) => {
+            return summary + question.difficulty;
+        }, 0);
+
+        return  totalDifficultyPoints / this.questions.length;
+    }
 }
