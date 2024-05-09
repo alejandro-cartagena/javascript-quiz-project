@@ -13,6 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // End view elements
   const resultContainer = document.querySelector("#result");
+  const resetQuizBtn = document.querySelector('#restartButton');
+
+
+  resetQuizBtn.addEventListener('click', resetQuiz)
+ 
 
 
   /************  SET VISIBILITY OF VIEWS  ************/
@@ -59,7 +64,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  
+  // console.log(quizMinutes, quizSeconds)
+
+  
+  
+
+
+
+
 
 
   /************  EVENT LISTENERS  ************/
@@ -82,6 +95,20 @@ document.addEventListener("DOMContentLoaded", () => {
       showResults();
       return;
     }
+
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+    let timer = setInterval(() => {
+      quiz.timeLimit--
+      if (quiz.timeLimit === 0) {
+        showResults()
+        clearInterval(timer)
+      }
+      let quizMinutes = Math.floor(quiz.timeLimit / 60)  // ==> 2
+      let quizSeconds = quiz.timeLimit % 60 < 10 ? `0${quiz.timeLimit % 60}` : quiz.timeLimit % 60
+      timeRemainingContainer.innerText = `0${quizMinutes}:${quizSeconds}`;
+      
+      
+    }, 1000);
 
     // Clear the previous question text and question choices
     questionContainer.innerText = "";
@@ -187,4 +214,15 @@ document.addEventListener("DOMContentLoaded", () => {
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
   }
   
+  function resetQuiz() {
+
+    quizView.style.display = "block";
+    endView.style.display = "none";
+    quiz.currentQuestionIndex = 0;
+    quiz.correctAnswers = 0
+    quiz.timeLimit = quizDuration
+    quiz.shuffleQuestions();
+    showQuestion();    
+
+  }
 });
